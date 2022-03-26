@@ -1,5 +1,7 @@
 package go_koans
 
+import "fmt"
+
 func isPrimeNumber(possiblePrime int) bool {
 	for underPrime := 2; underPrime < possiblePrime; underPrime++ {
 		if possiblePrime%underPrime == 0 {
@@ -13,6 +15,10 @@ func findPrimeNumbers(channel chan int) {
 	for i := 2; ; /* infinite loop */ i++ {
 		// your code goes here
 
+		if isPrime := isPrimeNumber(i); isPrime == true {
+			channel <- i
+		}
+
 		assert(i < 100) // i is afraid of heights
 	}
 }
@@ -20,7 +26,9 @@ func findPrimeNumbers(channel chan int) {
 func aboutConcurrency() {
 	ch := make(chan int)
 
-	assert(__delete_me__) // concurrency can be almost trivial
+	fmt.Println("1")
+	go findPrimeNumbers(ch)
+	fmt.Println("2")
 	// your code goes here
 
 	assert(<-ch == 2)
